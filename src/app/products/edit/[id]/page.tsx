@@ -151,7 +151,7 @@ export default function EditProductPage() {
         />
         {imagePreview && (
           // Untuk preview blob/gambar lokal, gunakan <img> biasa
-          <img
+          <Image
             src={imagePreview}
             alt="Preview"
             className="w-full rounded-md mt-2"
