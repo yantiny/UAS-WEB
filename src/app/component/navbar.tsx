@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import { User, Menu, X } from "lucide-react";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

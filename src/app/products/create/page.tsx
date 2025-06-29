@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 
@@ -14,15 +14,17 @@ export default function AddProductPage() {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e: any) => {
-    setImageFile(e.target.files[0]);
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let imageUrl = "";
@@ -41,7 +43,6 @@ export default function AddProductPage() {
         return;
       }
 
-      // Dapatkan URL publik
       const { data } = supabase.storage
         .from("bucket-storage")
         .getPublicUrl(filePath);

@@ -1,27 +1,37 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
+// 🔸 Tipe data produk
+type Produk = {
+  id: number;
+  nama_produk: string;
+  deskripsi: string;
+  harga: number;
+  ukuran: "S" | "M" | "L";
+  image_url: string;
+};
+
 export default function ProductsPage() {
-  const [produk, setProduk] = useState<any[]>([]);
+  const [produk, setProduk] = useState<Produk[]>([]);
   const [selectedSize, setSelectedSize] = useState("All");
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     const fetchProduk = async () => {
-      const { data } = await supabase.from("produk").select("*");
-      setProduk(data || []);
+      const { data, error } = await supabase.from("produk").select("*");
+      if (error) {
+        console.error("Gagal mengambil produk:", error.message);
+        return;
+      }
+      setProduk((data as Produk[]) || []);
     };
     fetchProduk();
   }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/"); // Redirect ke halaman login
-  };
 
   const filteredProduk =
     selectedSize === "All"
@@ -58,20 +68,26 @@ export default function ProductsPage() {
         </select>
       </div>
 
-      {/* 📦 Produk */}
+      {/* 📦 Daftar Produk */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {filteredProduk.length === 0 ? (
           <p className="text-gray-500 col-span-full">Tidak ada produk.</p>
         ) : (
           filteredProduk.map((p) => (
             <div key={p.id} className="border rounded p-4 shadow">
-              <Image
-                src={p.image_url}
-                alt={p.nama_produk}
-                className="rounded-xl w-full object-cover aspect-square mb-3"
-                width={300}
-                height={300}
-              />
+              {p.image_url ? (
+                <Image
+                  src={p.image_url}
+                  alt={p.nama_produk}
+                  className="rounded-xl w-full object-cover aspect-square mb-3"
+                  width={300}
+                  height={300}
+                />
+              ) : (
+                <div className="aspect-square bg-gray-200 mb-3 rounded-xl flex items-center justify-center text-gray-500">
+                  No image
+                </div>
+              )}
               <h2 className="font-semibold text-lg">{p.nama_produk}</h2>
               <p className="text-sm text-gray-500">{p.deskripsi}</p>
               <p className="text-green-700 font-bold">

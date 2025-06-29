@@ -19,7 +19,7 @@ export default function LoginPage() {
     };
 
     checkSession();
-  }, []);
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
