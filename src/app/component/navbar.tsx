@@ -1,23 +1,41 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { UserIcon, Menu, X } from "lucide-react";
+import { User, Menu, X } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Cek session saat komponen dimount
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setIsLoggedIn(!!data.session);
+    };
+
+    checkSession();
+  }, []);
 
   const menu = [
     { name: "Home", path: "/" },
-    { name: "About Us", path: "/products" },
-    { name: "Contacts", path: "/contacts" },
+    { name: "About Us", path: "#AboutSection" },
+    { name: "Contacts", path: "#footer" },
   ];
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  // Handle logout
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.location.reload(); // Refresh untuk update tampilan login/logout
   };
 
   return (
@@ -40,11 +58,8 @@ export default function Navbar() {
             <li key={item.path}>
               <Link
                 href={item.path}
-                className={`text-sm font-medium ${
-                  pathname === item.path
-                    ? "text-gray-400 hover:text-black"
-                    : "text-gray-400 hover:text-black"
-                }`}
+                onClick={() => setIsOpen(false)}
+                className={`text-sm font-medium text-gray-400 hover:text-black`}
               >
                 {item.name}
               </Link>
@@ -54,9 +69,18 @@ export default function Navbar() {
 
         {/* User Icon & Hamburger */}
         <div className="flex items-center space-x-4">
-          <Link href="/login">
-            <UserIcon className="w-5 h-5 text-black hover:text-green-700" />
-          </Link>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="text-black hover:text-red-600 text-sm"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link href="/login">
+              <User className="w-5 h-5 text-black hover:text-green-700" />
+            </Link>
+          )}
 
           {/* Hamburger Menu - Mobile only */}
           <button
@@ -76,11 +100,7 @@ export default function Navbar() {
               <Link
                 href={item.path}
                 onClick={() => setIsOpen(false)}
-                className={`block text-sm font-medium ${
-                  pathname === item.path
-                    ? "text-black underline"
-                    : "text-gray-400 hover:text-black"
-                }`}
+                className={`block text-sm font-medium text-gray-400 hover:text-black`}
               >
                 {item.name}
               </Link>

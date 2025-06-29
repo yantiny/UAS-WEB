@@ -2,7 +2,7 @@ import { Package, PhoneCall, Leaf } from "lucide-react";
 
 export default function AboutSection() {
   return (
-    <section className="py-16 px-4 md:px-16 text-center">
+    <section id="AboutSection" className="py-16 px-4 md:px-16 text-center">
       {/* Heading */}
       <div className="mb-12">
         <h2 className="text-2xl md:text-3xl font-bold text-black">About us</h2>

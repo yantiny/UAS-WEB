@@ -36,7 +36,7 @@ const products = [
 
 export default function ProductSection() {
   return (
-    <section className="flex flex-col md:flex-row items-start justify-between gap-10 py-12">
+    <section className="flex flex-col md:flex-row items-start justify-between gap-10 py-12" id="ProductSection">
       <div className="flex mt-15 bg-white">
         <div className="max-w-xs space-y-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-black">
@@ -46,7 +46,7 @@ export default function ProductSection() {
             Easiest way to add beauty to your moments by picking your favorite
             bouquets
           </p>
-          <Link href="/product">
+          <Link href="/products/all">
             <button className="bg-[#C8E0E3] text-black px-4 py-2 rounded hover:bg-[#b0d3da]">
               See all <span className="ml-1">→</span>
             </button>

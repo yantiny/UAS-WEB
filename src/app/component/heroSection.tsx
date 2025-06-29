@@ -3,18 +3,18 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="bg-[#C8E0E3] rounded-2xl p-8 my-8 flex flex-col md:flex-row items-center justify-around">
+    <section id="HeroSection" className="bg-[#C8E0E3] rounded-2xl p-8 my-8 flex flex-col md:flex-row items-center justify-around">
       {/* Left Text */}
       <div className="max-w-lg space-y-4 text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold text-black leading-tight">
           Create Your <br /> Dream Bouquets
         </h1>
         <p className="text-gray-700 font-medium">Unique is Beautiful</p>
-        <Link href="/products">
+        <a href="#ProductSection">
           <button className="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600">
             View catalogue
           </button>
-        </Link>
+        </a>
       </div>
 
       {/* Right Image */}

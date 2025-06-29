@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#C8E0E3] text-black px-6 md:px-16 py-12 mt-20">
+    <footer id="footer" className="bg-[#C8E0E3] text-black px-6 md:px-16 py-12 mt-20">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Column 1: Logo & Description */}
         <div>
@@ -60,13 +60,13 @@ export default function Footer() {
           <h3 className="font-semibold mb-2">Information</h3>
           <ul className="text-sm space-y-1 text-gray-700">
             <li>
-              <a href="#">About</a>
+              <a href="#AboutSection">About</a>
             </li>
             <li>
-              <a href="#">Product</a>
+              <a href="#ProductSection">Product</a>
             </li>
             <li>
-              <a href="#">Blog</a>
+              <a href="#heroSection">Blog</a>
             </li>
           </ul>
         </div>
