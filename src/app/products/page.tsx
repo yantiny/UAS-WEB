@@ -5,8 +5,18 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
+// Tambahkan tipe Produk
+type Produk = {
+  id: number;
+  nama_produk: string;
+  deskripsi: string;
+  harga: number;
+  ukuran: string;
+  image_url: string;
+};
+
 export default function ProductsPage() {
-  const [produk, setProduk] = useState<any[]>([]);
+  const [produk, setProduk] = useState<Produk[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,7 +33,7 @@ export default function ProductsPage() {
   useEffect(() => {
     const fetchProduk = async () => {
       const { data } = await supabase.from("produk").select("*");
-      setProduk(data || []);
+      setProduk((data as Produk[]) || []);
     };
     fetchProduk();
   }, []);

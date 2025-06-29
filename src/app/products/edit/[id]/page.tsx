@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import Image from "next/image";
 
 export default function EditProductPage() {
   const router = useRouter();
@@ -42,11 +43,15 @@ export default function EditProductPage() {
     fetchData();
   }, [id]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e: any) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setImageFile(file);
@@ -55,7 +60,7 @@ export default function EditProductPage() {
     }
   };
 
-  const handleUpdate = async (e: any) => {
+  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let imageUrl = form.image_url;
@@ -145,10 +150,13 @@ export default function EditProductPage() {
           className="w-full border p-2 rounded"
         />
         {imagePreview && (
+          // Untuk preview blob/gambar lokal, gunakan <img> biasa
           <img
             src={imagePreview}
             alt="Preview"
             className="w-full rounded-md mt-2"
+            width={300}
+            height={300}
           />
         )}
         <button className="bg-blue-600 text-white py-2 px-4 rounded">
